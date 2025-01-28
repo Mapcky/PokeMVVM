@@ -19,13 +19,15 @@ struct URLImage: View {
     }
     
     var body: some View {
-      
         if let data = self.imageLoader.downloadedData {
-            return Image(uiImage: UIImage(data: data)!).resizable()
+            Image(uiImage: UIImage(data: data)!)
+                .resizable()
+                .scaledToFit() // Aplica scaleToFit
         } else {
-            return Image("placeholder").resizable()
+            Image(systemName: "x.circle")
+                .resizable()
+                .scaledToFit() // Aplica scaleToFit también al placeholder
         }
-        
     }
 }
 

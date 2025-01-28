@@ -58,7 +58,7 @@ class PokemonViewModel: ViewModelBase {
         pokemon?.sprites.front_shiny ?? ""
     }
     
-    func getPokemon(name: String) {
+    func getPokemonByName(name: String) {
         self.loadingState = .loading
         webService.getPokemonByName(name: name) { result in
             switch result {
@@ -77,6 +77,25 @@ class PokemonViewModel: ViewModelBase {
                 
             }
             
+        }
+    }
+    
+    
+    func getPokemonByUrl(url: String) {
+        self.loadingState = .loading
+        webService.getPokemonByUrl(url: url) { result in
+            switch result {
+            case .success(let data):
+                DispatchQueue.main.async {
+                    self.pokemon = data
+                    self.loadingState = .success
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.loadingState = .failed
+                }
+            }
         }
     }
 }

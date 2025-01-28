@@ -9,14 +9,14 @@ import SwiftUI
 
 struct MainView: View {
     
-    @ObservedObject var pokemonVM: PokemonViewModel
+    //@ObservedObject var pokemonVM: PokemonViewModel
     @ObservedObject var pokemonListVM: PokemonListViewModel
     @State private var pokeName: String = ""
     
     init() {
-        pokemonVM = PokemonViewModel()
+        //pokemonVM = PokemonViewModel()
         pokemonListVM = PokemonListViewModel()
-        pokemonVM.getPokemon(name: "sylveon")
+        //pokemonVM.getPokemonByName(name: "sylveon")
         pokemonListVM.getList()
     }
     
@@ -30,11 +30,11 @@ struct MainView: View {
                         .autocorrectionDisabled()
                         .padding()
                     Button(action: {
-                        pokemonVM.getPokemon(name: pokeName
-                        )
+                        //pokemonVM.getPokemonByName(name: pokeName)
                     }, label:
                             {Image(systemName: "magnifyingglass")})
                 }
+                /*
                 switch(pokemonVM.loadingState) {
                 case .success:
                     PokemonView(pokemonVM: pokemonVM)
@@ -46,7 +46,7 @@ struct MainView: View {
                         .font(.largeTitle)
                 case .none:
                     Text("none")
-                }
+                } */
                 
             }
             .padding()
@@ -54,7 +54,7 @@ struct MainView: View {
                 .font(.title3)
             switch(pokemonListVM.loadingState) {
             case .success:
-                PokemonListView(PokemonLVM: pokemonListVM)
+                PokemonGridView(PokemonLVM: pokemonListVM)
             case .failed:
                 Text("Fail")
             case .loading:

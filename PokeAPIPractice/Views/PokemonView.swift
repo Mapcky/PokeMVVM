@@ -26,7 +26,7 @@ struct PokemonView: View {
                 Text("Shiny")
             }
         }
-        .frame(width: .infinity, height: 200)
+        //.frame(width: .infinity, height: 200)
     }
 }
 

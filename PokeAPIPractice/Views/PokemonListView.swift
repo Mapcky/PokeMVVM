@@ -15,13 +15,14 @@ struct PokemonListView: View {
     // MARK: - BODY
     var body: some View {
        List {
-           ForEach(PokemonLVM.pokemonL!.results, id:\.url) { pokemon in
+           ForEach(PokemonLVM.pokemonL?.results ?? [results(name: "bulbasaur", url: "https://pokeapi.co/api/v2/pokemon/bulbasaur")], id:\.url) { pokemon in
                Text("\(pokemon.name)")
             }
            
         }
        .listStyle(.plain)
        .frame(height: 300)
+    
     }
 }
 /*

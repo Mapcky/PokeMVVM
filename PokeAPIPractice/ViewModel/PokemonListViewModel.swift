@@ -41,10 +41,11 @@ class PokemonListViewModel: ViewModelBase {
                     self.loadingState = .failed
                 }
             }
-            
         }
-        
-        
+    }
+    
+    func filterByName(search: String) {
+        //pokemonL?.results.filter(<#T##isIncluded: (results) throws -> Bool##(results) throws -> Bool#>)
     }
     
     
