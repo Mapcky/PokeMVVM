@@ -13,7 +13,7 @@ struct PokemonView: View {
     var body: some View {
         Text(pokemonVM.name)
             .font(.largeTitle)
-        Text(pokemonVM.height)
+        //Text(pokemonVM.height)
         Text("No \(pokemonVM.id)")
         HStack{
             VStack{

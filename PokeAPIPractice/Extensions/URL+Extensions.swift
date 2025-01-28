@@ -11,4 +11,8 @@ extension URL {
     static func urlGetPokemon(pokemon: String) -> URL? {
         return URL(string: "https://pokeapi.co/api/v2/pokemon/\(pokemon)")
     }
+    
+    static func urlGetPokemonList() -> URL? {
+        return URL(string: "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0")
+    }
 }

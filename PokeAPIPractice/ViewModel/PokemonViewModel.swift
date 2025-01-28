@@ -21,7 +21,10 @@ class PokemonViewModel: ViewModelBase {
     let uuid = UUID()
     
     var name: String {
-        pokemon?.name ?? "vacio"
+        guard let pokemonName = pokemon?.name, let first = pokemonName.first else {
+            return ""
+        }
+        return first.uppercased() + pokemonName.dropFirst()
     }
     
     var id: String {

@@ -37,4 +37,30 @@ class WebService {
             
         }.resume()
     }
+    
+    func getPokemonList(completion: @escaping (Result<PokemonList, NetworkError>) -> Void) {
+        guard let pokeApiUrl = URL.urlGetPokemonList() else {
+            return completion(.failure(.badURL))
+        }
+        
+        URLSession.shared.dataTask(with: pokeApiUrl) { (data, _, error) in
+            
+            
+            guard let data = data, error == nil else {
+                return completion(.failure(.noData))
+            }
+            
+            let pokeResponse = try? JSONDecoder().decode(PokemonList.self, from: data)
+            
+            
+            DispatchQueue.main.async {
+                if let pokeResponse = pokeResponse {
+                    completion(.success(pokeResponse))
+                }
+            }//DispatchQ
+
+        }.resume()  //: URLSession
+        
+    }
+    
 }
