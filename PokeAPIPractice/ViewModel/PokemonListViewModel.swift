@@ -15,17 +15,13 @@ class PokemonListViewModel: ViewModelBase {
     init(pokemonL: PokemonList? = nil) {
         self.pokemonL = pokemonL
     }
-    
-    var firstPokemon: String {
-        pokemonL?.results.first?.name ?? "nil"
-    }
-    
+        
     var count: Int {
         pokemonL?.count ?? 0
     }
     
     var List: [results] {
-        pokemonL?.results ?? [results(name: "vacio", url: "")]
+        pokemonL?.results ?? [results(name: "", url: "")]
     }
 
     

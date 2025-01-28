@@ -13,8 +13,9 @@ struct PokemonView: View {
     var body: some View {
         Text(pokemonVM.name)
             .font(.largeTitle)
-        //Text(pokemonVM.height)
         Text("No \(pokemonVM.id)")
+        Text("Height \(pokemonVM.height)")
+        Text("Weight \(pokemonVM.weight)")
         HStack{
             VStack{
                 URLImage(url: pokemonVM.spriteNormal)

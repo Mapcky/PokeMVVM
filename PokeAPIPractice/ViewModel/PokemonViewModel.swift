@@ -32,7 +32,22 @@ class PokemonViewModel: ViewModelBase {
     }
     
     var height: String {
-        String(pokemon?.height ?? 0)
+        guard let height = pokemon?.height  else {
+            return ""
+        }
+        if height >= 10 {
+            return "\(height/10) m"
+        }
+        else {
+            return "\(height*10) cm"
+        }
+    }
+    
+    var weight: String {
+        guard let weight = pokemon?.weight  else {
+            return ""
+        }
+        return "\(weight/10) kg"
     }
     
     var spriteNormal: String {

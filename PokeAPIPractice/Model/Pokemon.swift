@@ -10,8 +10,9 @@ import Foundation
 struct Pokemon: Decodable {
     var name: String
     var id: Int
-    var height: Int
+    var height: Double
     var sprites: sprites
+    var weight: Double
     
     
     struct sprites: Decodable {

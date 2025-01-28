@@ -27,6 +27,7 @@ struct MainView: View {
                 HStack{
                     TextField("Search", text: $pokeName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .autocorrectionDisabled()
                         .padding()
                     Button(action: {
                         pokemonVM.getPokemon(name: pokeName
