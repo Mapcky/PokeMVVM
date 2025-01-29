@@ -15,7 +15,7 @@ struct PokemonList: Decodable {
     
 }
 
-struct results: Decodable {
+struct results: Decodable, Equatable {
     var name: String
     var url: String
 }

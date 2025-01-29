@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PokemonGridView: View {
     // MARK: - PROPERTIES
-    let PokemonLVM: PokemonListViewModel
+    @ObservedObject var pokemonLVM: PokemonListViewModel
     private let columnSpacing: CGFloat = 10
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
@@ -19,14 +19,29 @@ struct PokemonGridView: View {
     
     
     var body: some View {
-        ScrollView(.vertical, showsIndicators: true) {
+        ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: gridLayout, alignment: .center, spacing: columnSpacing, pinnedViews: [], content: {
-                ForEach(PokemonLVM.pokemonL!.results, id:\.url) { pokemon in
+                if let pokemonResults = pokemonLVM.pokemonL?.results {
+                ForEach(pokemonResults, id:\.url) { pokemon in
                     GridItemView(urlPokeon: pokemon.url)
+                        .onAppear {
+                            if pokemon == pokemonResults.last {
+                                pokemonLVM.getList()
+                            }
+                        }
                  }
+                    if pokemonLVM.loadingState == .loading {
+                        Text("loading")
+                    }
+                }
             })//: VGrid
             .padding()
         }//: Scroll
+        .onAppear {
+            if pokemonLVM.List.isEmpty {
+                pokemonLVM.getList()
+            }
+        }
     }
 }
 /*

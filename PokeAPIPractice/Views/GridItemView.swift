@@ -21,10 +21,17 @@ struct GridItemView: View {
         VStack {
             switch(pokemonVM.loadingState) {
             case .success:
-                URLImage(url: pokemonVM.spriteNormal)
-                    .padding(3)
-                    .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 12)))
-                    .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
+                ZStack(alignment: .bottomLeading) {
+                    URLImage(url: pokemonVM.spriteNormal)
+                        .padding(3)
+                        .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 12)))
+                        .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
+                    
+                    Text(pokemonVM.id)
+                        .font(.custom("PressStart2P-Regular", size: 24))
+                        .padding(.horizontal, 8)
+                        
+                }
                 Text(pokemonVM.name)
             case .failed:
                 Text("Fail")

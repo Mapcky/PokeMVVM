@@ -12,7 +12,7 @@ extension URL {
         return URL(string: "https://pokeapi.co/api/v2/pokemon/\(pokemon)")
     }
     
-    static func urlGetPokemonList() -> URL? {
-        return URL(string: "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0")
+    static func urlGetPokemonList(limit: Int, offset: Int) -> URL? {
+        return URL(string: "https://pokeapi.co/api/v2/pokemon?limit=\(limit)&offset=\(offset)")
     }
 }

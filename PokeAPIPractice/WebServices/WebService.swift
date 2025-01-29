@@ -38,8 +38,8 @@ class WebService {
         }.resume()
     }
     
-    func getPokemonList(completion: @escaping (Result<PokemonList, NetworkError>) -> Void) {
-        guard let pokeApiUrl = URL.urlGetPokemonList() else {
+    func getPokemonList(limit: Int, offset: Int,completion: @escaping (Result<PokemonList, NetworkError>) -> Void) {
+        guard let pokeApiUrl = URL.urlGetPokemonList(limit: limit, offset: offset) else {
             return completion(.failure(.badURL))
         }
         

@@ -8,21 +8,18 @@
 import SwiftUI
 
 struct MainView: View {
-    
-    //@ObservedObject var pokemonVM: PokemonViewModel
+    // MARK: - PROPERTIES
     @ObservedObject var pokemonListVM: PokemonListViewModel
     @State private var pokeName: String = ""
     
+    // MARK: - Functions
     init() {
-        //pokemonVM = PokemonViewModel()
         pokemonListVM = PokemonListViewModel()
-        //pokemonVM.getPokemonByName(name: "sylveon")
         pokemonListVM.getList()
     }
     
+    // MARK: - BODY
     var body: some View {
-        ScrollView {
-            
             VStack(spacing: 20) {
                 HStack{
                     TextField("Search", text: $pokeName)
@@ -30,41 +27,17 @@ struct MainView: View {
                         .autocorrectionDisabled()
                         .padding()
                     Button(action: {
-                        //pokemonVM.getPokemonByName(name: pokeName)
+
                     }, label:
                             {Image(systemName: "magnifyingglass")})
                 }
-                /*
-                switch(pokemonVM.loadingState) {
-                case .success:
-                    PokemonView(pokemonVM: pokemonVM)
-                    
-                case .failed:
-                    Text("Fail")
-                case .loading:
-                    Text("Loading")
-                        .font(.largeTitle)
-                case .none:
-                    Text("none")
-                } */
-                
             }
             .padding()
             Text("Pokedex")
                 .font(.title3)
-            switch(pokemonListVM.loadingState) {
-            case .success:
-                PokemonGridView(PokemonLVM: pokemonListVM)
-            case .failed:
-                Text("Fail")
-            case .loading:
-                Text("Loading")
-                    .font(.largeTitle)
-            case .none:
-                Text("none")
-            }
+        PokemonGridView(pokemonLVM: pokemonListVM)
+
         }
-    }
 }
 
 #Preview {
