@@ -1,13 +1,13 @@
 //
-//  PokemonGridView.swift
+//  PokemonGridViewWPaging.swift
 //  PokeAPIPractice
 //
-//  Created by Mateo Andres Perano on 28/01/2025.
+//  Created by Mateo Andres Perano on 29/01/2025.
 //
 
 import SwiftUI
 
-struct PokemonGridView: View {
+struct PokemonGridViewWPaging: View {
     // MARK: - PROPERTIES
     @ObservedObject var pokemonLVM: PokemonListViewModel
     private let columnSpacing: CGFloat = 10
@@ -21,35 +21,31 @@ struct PokemonGridView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: gridLayout, alignment: .center, spacing: columnSpacing, pinnedViews: [], content: {
-                //if let pokemonResults = pokemonLVM.pokemonL?.results {
-                    //ForEach(pokemonResults, id:\.url) { pokemon in
-                ForEach(pokemonLVM.List, id:\.url) { pokemon in
-                    GridItemView(urlPokeon: pokemon.url)
-                        .onAppear {
-                            //if pokemon == pokemonResults.last {
-                            if pokemon == pokemonLVM.List.last {
-                                //pokemonLVM.getListWithPaging()
-                                pokemonLVM.loadNextPage()
+                if let pokemonResults = pokemonLVM.pokemonL?.results {
+                    ForEach(pokemonResults, id:\.url) { pokemon in
+                        GridItemView(urlPokeon: pokemon.url)
+                            .onAppear {
+                                if pokemon == pokemonResults.last {
+                                    pokemonLVM.getListWithPaging()
+                                }
                             }
-                        }
-                 }
+                    }
                     if pokemonLVM.loadingState == .loading {
                         Text("loading")
                     }
-          //      }
+                }
             })//: VGrid
             .padding()
         }//: Scroll
         .onAppear {
             if pokemonLVM.List.isEmpty {
-                //pokemonLVM.getListWithPaging()
-                pokemonLVM.getFullList()
+                pokemonLVM.getListWithPaging()
             }
         }
     }
 }
 
-#Preview {
-    PokemonGridView(pokemonLVM: PokemonListViewModel())
-}
 
+#Preview {
+    PokemonGridViewWPaging(pokemonLVM: PokemonListViewModel())
+}

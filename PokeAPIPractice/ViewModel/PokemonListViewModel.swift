@@ -28,19 +28,40 @@ class PokemonListViewModel: ViewModelBase {
     }
     
     var List: [results] {
-        pokemonL?.results ?? [results(name: "", url: "")]
+        guard let results = pokemonL?.results else { return [] }
+        let startIndex = currentPage * pageSize
+        let endIndex = min(startIndex + pageSize, results.count)
+        return Array(results[startIndex..<endIndex])
     }
 
+    func getFullList() {
+        self.loadingState = .loading
+        webService.getPokemonList(limit: 100000, offset: 0) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let data):
+                    self.pokemonL = data
+                    self.loadingState = .success
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    self.loadingState = .failed
+                }
+            }
+        }
+    }
     
-    func getList() {
-        
+    func loadNextPage() {
+        guard let totalResults = pokemonL?.results, currentPage * pageSize < totalResults.count else { return }
+        currentPage += 1
+    }
+    
+    
+    func getListWithPaging() {
         guard !isLoading else { return }
         isLoading = true
         DispatchQueue.main.async {
             self.loadingState = .loading
         }
-        
-        
         let offset = currentPage * pageSize
         webService.getPokemonList(limit: pageSize, offset: offset) { result in
             
@@ -62,9 +83,9 @@ class PokemonListViewModel: ViewModelBase {
                     DispatchQueue.main.async {
                         self.loadingState = .failed
                     }
-                }
-            }
-        }
+                }//: switch
+            }//: DispatchQ
+        }//: Webservice
     }
     
     func filterByName(search: String) -> PokemonList {

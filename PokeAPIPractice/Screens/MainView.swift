@@ -15,11 +15,12 @@ struct MainView: View {
     // MARK: - Functions
     init() {
         pokemonListVM = PokemonListViewModel()
-        pokemonListVM.getList()
+        
     }
     
     // MARK: - BODY
     var body: some View {
+        NavigationView {
             VStack(spacing: 20) {
                 HStack{
                     TextField("Search", text: $pokeName)
@@ -27,16 +28,21 @@ struct MainView: View {
                         .autocorrectionDisabled()
                         .padding()
                     Button(action: {
-
+                        
                     }, label:
                             {Image(systemName: "magnifyingglass")})
                 }
+                
+                .padding()
+                
+                Text("Pokedex")
+                    .font(.title3)
+                //PokemonGridView(pokemonLVM: pokemonListVM)
+                PokemonGridViewWPaging(pokemonLVM: pokemonListVM)
             }
-            .padding()
-            Text("Pokedex")
-                .font(.title3)
-        PokemonGridView(pokemonLVM: pokemonListVM)
-
+        }
+        .navigationTitle("")
+        .navigationViewStyle(StackNavigationViewStyle())
         }
 }
 

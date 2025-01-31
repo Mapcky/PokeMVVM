@@ -13,10 +13,7 @@ struct PokemonDetailView: View {
     @ObservedObject var pokemonVM: PokemonViewModel
     
     // MARK: - FUNCTIONS
-    init() {
-        pokemonVM = PokemonViewModel()
-        pokemonVM.getPokemonByName(name: "Sylveon")
-    }
+
     
     // MARK: - BODY
     var body: some View {
@@ -37,6 +34,7 @@ struct PokemonDetailView: View {
     }
 }
 
-#Preview {
-    PokemonDetailView()
+#Preview
+{
+    PokemonDetailView(pokemonVM: PokemonViewModel())
 }

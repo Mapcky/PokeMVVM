@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PokemonView: View {
-    let pokemonVM: PokemonViewModel
+    @ObservedObject var pokemonVM: PokemonViewModel
     
     var body: some View {
         Text(pokemonVM.name)
@@ -30,4 +30,7 @@ struct PokemonView: View {
     }
 }
 
-
+#Preview
+{
+    PokemonView(pokemonVM: PokemonViewModel())
+}

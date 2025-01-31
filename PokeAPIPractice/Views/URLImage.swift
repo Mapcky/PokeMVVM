@@ -24,9 +24,9 @@ struct URLImage: View {
                 .resizable()
                 .scaledToFit() // Aplica scaleToFit
         } else {
-            Image(systemName: "x.circle")
+            Image("pokeball")
                 .resizable()
-                .scaledToFit() // Aplica scaleToFit también al placeholder
+                .frame(width: 40, height: 40) // Aplica scaleToFit también al placeholder
         }
     }
 }
