@@ -28,7 +28,8 @@ struct MainView: View {
                         .autocorrectionDisabled()
                         .padding()
                     Button(action: {
-                        
+                        pokemonListVM.isSearching = pokeName.isEmpty
+                        pokemonListVM.filterByName(search: pokeName)
                     }, label:
                             {Image(systemName: "magnifyingglass")})
                 }
@@ -37,14 +38,15 @@ struct MainView: View {
                 
                 Text("Pokedex")
                     .font(.title3)
-                //PokemonGridView(pokemonLVM: pokemonListVM)
-                PokemonGridViewWPaging(pokemonLVM: pokemonListVM)
+                PokemonGridView(pokemonLVM: pokemonListVM)
             }
         }
         .navigationTitle("")
         .navigationViewStyle(StackNavigationViewStyle())
-        }
+    }
+    
 }
+
 
 #Preview {
     MainView()

@@ -10,11 +10,13 @@ import Foundation
 class PokemonListViewModel: ViewModelBase {
 
     // MARK: - PROPERTIES
-    var pokemonL: PokemonList?
+    @Published var pokemonL: PokemonList?
+    @Published var List: [results] = []
+    @Published var currentPage: Int = 0
+    var isSearching: Bool = false
     let webService = WebService()
     
-    private let pageSize: Int = 20
-    private var currentPage: Int = 0
+    private let pageSize: Int = 50
     private var isLoading: Bool = false
     
     
@@ -26,13 +28,6 @@ class PokemonListViewModel: ViewModelBase {
     var count: Int {
         pokemonL?.count ?? 0
     }
-    
-    var List: [results] {
-        guard let results = pokemonL?.results else { return [] }
-        let startIndex = currentPage * pageSize
-        let endIndex = min(startIndex + pageSize, results.count)
-        return Array(results[startIndex..<endIndex])
-    }
 
     func getFullList() {
         self.loadingState = .loading
@@ -41,6 +36,8 @@ class PokemonListViewModel: ViewModelBase {
                 switch result {
                 case .success(let data):
                     self.pokemonL = data
+                    self.loadNextPage()
+                    self.currentPage += 1
                     self.loadingState = .success
                 case .failure(let error):
                     print(error.localizedDescription)
@@ -51,8 +48,17 @@ class PokemonListViewModel: ViewModelBase {
     }
     
     func loadNextPage() {
-        guard let totalResults = pokemonL?.results, currentPage * pageSize < totalResults.count else { return }
-        currentPage += 1
+        if !isSearching {
+            guard currentPage * pageSize < pokemonL?.results.count ?? 0 else { return }
+            let startIndex = currentPage * pageSize
+            let endIndex = min(startIndex + pageSize, pokemonL?.results.count ?? 0)
+            let newPokemon = Array(pokemonL!.results[startIndex..<endIndex])
+            
+            DispatchQueue.main.async {
+                self.List.append(contentsOf: newPokemon)
+                self.currentPage += 1
+            }
+        }
     }
     
     
@@ -88,9 +94,11 @@ class PokemonListViewModel: ViewModelBase {
         }//: Webservice
     }
     
-    func filterByName(search: String) -> PokemonList {
+    func filterByName(search: String) {
         let filteredResults = pokemonL!.results.filter{ $0.name.hasPrefix(search.lowercased()) }
-        return PokemonList(count: filteredResults.count, results: filteredResults)
+        List = filteredResults
+        currentPage = 0
+        isSearching = true
     }
     
     

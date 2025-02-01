@@ -13,10 +13,8 @@ struct PokemonGridViewWPaging: View {
     private let columnSpacing: CGFloat = 10
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
-        return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 2)
+        return Array(repeating: GridItem(.flexible(), spacing: rowSpacing), count: 3)
     }
-    
-    
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -29,9 +27,6 @@ struct PokemonGridViewWPaging: View {
                                     pokemonLVM.getListWithPaging()
                                 }
                             }
-                    }
-                    if pokemonLVM.loadingState == .loading {
-                        Text("loading")
                     }
                 }
             })//: VGrid

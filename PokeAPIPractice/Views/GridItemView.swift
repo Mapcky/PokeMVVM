@@ -20,10 +20,9 @@ struct GridItemView: View {
     var body: some View {
         NavigationLink(destination: PokemonDetailView(pokemonVM: pokemonVM)) {
             VStack {
-                switch(pokemonVM.loadingState) {
-                case .success:
                     ZStack(alignment: .bottomLeading) {
                         URLImage(url: pokemonVM.spriteNormal)
+                            .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 8, x: 6, y: 8)
                             .padding(3)
                             .background(Image("grass")
                                 .resizable().clipShape(RoundedRectangle(cornerRadius: 12)))
@@ -37,22 +36,10 @@ struct GridItemView: View {
                         
                     }
                     Text(pokemonVM.name)
-                        .font(.custom("PressStart2P-Regular", size: 12))
+                        .font(.custom("PressStart2P-Regular", size: 10))
                         .foregroundStyle(.black)
                         .padding(.vertical, 8)
-                case .failed: EmptyView()
-                    
-                    
-                case .loading:
-                    URLImage(url: "pokeball")
-                        .padding(3)
-                        .background(Color.white.clipShape(RoundedRectangle(cornerRadius: 12)))
-                        .background(RoundedRectangle(cornerRadius: 12).stroke(Color.gray, lineWidth: 1))
-                    
-                case .none:
-                    EmptyView()
-                    
-                }//: Switch
+
             }//: VStack
         }//:NAV
 
