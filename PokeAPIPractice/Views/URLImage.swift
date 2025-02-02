@@ -22,11 +22,11 @@ struct URLImage: View {
         if let data = self.imageLoader.downloadedData {
             Image(uiImage: UIImage(data: data)!)
                 .resizable()
-                .scaledToFit() // Aplica scaleToFit
+                .scaledToFit()
         } else {
             Image("pokeball")
                 .resizable()
-                .frame(width: 40, height: 40) // Aplica scaleToFit también al placeholder
+                .frame(width: 40, height: 40) 
         }
     }
 }

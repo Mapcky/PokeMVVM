@@ -18,7 +18,7 @@ struct GridItemView: View {
     }
     // MARK: - BODY
     var body: some View {
-        NavigationLink(destination: PokemonDetailView(pokemonVM: pokemonVM)) {
+        NavigationLink(destination: PokemonCard(pokemon: pokemonVM)) {
             VStack {
                     ZStack(alignment: .bottomLeading) {
                         URLImage(url: pokemonVM.spriteNormal)

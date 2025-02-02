@@ -58,6 +58,11 @@ class PokemonViewModel: ViewModelBase {
         pokemon?.sprites.front_shiny ?? ""
     }
     
+    var firstType: String {
+        pokemon?.types.first?.type.name ?? ""
+    }
+    
+    
     func getPokemonByName(name: String) {
         self.loadingState = .loading
         webService.getPokemonByName(name: name) { result in
