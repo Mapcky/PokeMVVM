@@ -27,6 +27,10 @@ struct MainView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .autocorrectionDisabled()
                         .padding()
+                        .onChange(of: pokeName) {
+                            pokemonListVM.isSearching = pokeName.isEmpty
+                            pokemonListVM.filterByName(search: pokeName)
+                        }
                     Button(action: {
                         pokemonListVM.isSearching = pokeName.isEmpty
                         pokemonListVM.filterByName(search: pokeName)

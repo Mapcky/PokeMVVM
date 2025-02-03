@@ -15,4 +15,9 @@ extension URL {
     static func urlGetPokemonList(limit: Int, offset: Int) -> URL? {
         return URL(string: "https://pokeapi.co/api/v2/pokemon?limit=\(limit)&offset=\(offset)")
     }
+    
+    static func urlGetTokyoTime() -> URL? {
+        return URL(string: "https://timeapi.io/api/Time/current/zone?timeZone=Asia/Tokyo")
+    }
+    
 }

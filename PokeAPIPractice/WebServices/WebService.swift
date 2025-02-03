@@ -88,4 +88,30 @@ class WebService {
         
     }
     
+    func getTokyoHour(completion: @escaping (Result<TimeAPIResponse, NetworkError>) -> Void) {
+        guard let timeApiUrl = URL.urlGetTokyoTime() else {
+            return(completion(.failure(.badURL)))
+        }
+        
+        URLSession.shared.dataTask(with: timeApiUrl) { (data, _, error) in
+        
+            guard let data = data, error == nil else {
+                return completion(.failure(.noData))
+            }
+            
+            let timeResponse = try? JSONDecoder().decode(TimeAPIResponse.self, from: data)
+            
+            DispatchQueue.main.async {
+                if let timeResponse = timeResponse {
+                    completion(.success(timeResponse))
+                }
+                
+            }//:DQ
+            
+            
+        }.resume()
+        
+    }
+    
+    
 }
