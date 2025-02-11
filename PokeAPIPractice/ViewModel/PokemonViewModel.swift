@@ -7,9 +7,9 @@
 
 import Foundation
 
-class PokemonViewModel: ViewModelBase {
+class PokemonViewModel: ObservableObject {
     
-    private var pokemon: Pokemon?
+    @Published private var pokemon: Pokemon?
     private var webService = WebService()
     
     
@@ -64,42 +64,28 @@ class PokemonViewModel: ViewModelBase {
     
     
     func getPokemonByName(name: String) {
-        self.loadingState = .loading
         webService.getPokemonByName(name: name) { result in
             switch result {
             case .success(let data):
-
                 DispatchQueue.main.async {
                     self.pokemon = data
-                    self.loadingState = .success
                 }
             case .failure(let error):
-
                 print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    self.loadingState = .failed
-                }
-                
             }
-            
         }
     }
     
     
     func getPokemonByUrl(url: String) {
-        self.loadingState = .loading
         webService.getPokemonByUrl(url: url) { result in
             switch result {
             case .success(let data):
                 DispatchQueue.main.async {
                     self.pokemon = data
-                    self.loadingState = .success
                 }
             case .failure(let error):
                 print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    self.loadingState = .failed
-                }
             }
         }
     }

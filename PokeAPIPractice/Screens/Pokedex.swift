@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  Pokedex.swift
 //  PokeAPIPractice
 //
 //  Created by Mateo Andres Perano on 27/01/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MainView: View {
+struct Pokedex: View {
     // MARK: - PROPERTIES
     @ObservedObject var pokemonListVM: PokemonListViewModel
     @State private var pokeName: String = ""
@@ -15,12 +15,11 @@ struct MainView: View {
     // MARK: - Functions
     init() {
         pokemonListVM = PokemonListViewModel()
-        
     }
     
     // MARK: - BODY
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 20) {
                 HStack{
                     TextField("Search", text: $pokeName)
@@ -32,8 +31,6 @@ struct MainView: View {
                             pokemonListVM.filterByName(search: pokeName)
                         }
                     Button(action: {
-                        pokemonListVM.isSearching = pokeName.isEmpty
-                        pokemonListVM.filterByName(search: pokeName)
                     }, label:
                             {Image(systemName: "magnifyingglass")})
                 }
@@ -44,14 +41,33 @@ struct MainView: View {
                     .font(.title3)
                 PokemonGridView(pokemonLVM: pokemonListVM)
             }
+            /*
+            .background(
+                ZStack {
+                    RoundedRectangle(cornerRadius: 30)
+                        .strokeBorder(Color.red, lineWidth: 14) // Solo borde
+                        .frame(height: UIScreen.main.bounds.height * 0.5)
+                        .offset(y: -UIScreen.main.bounds.height * 0.27)
+                    
+                    // Marco blanco inferior
+                    RoundedRectangle(cornerRadius: 30)
+                        .strokeBorder(Color.white, lineWidth: 20) // Solo borde
+                        .frame(height: UIScreen.main.bounds.height * 0.5)
+                        .offset(y: UIScreen.main.bounds.height * 0.25)
+                    Rectangle()
+                        .fill(Color.black)
+                        .frame(height: 100)
+                }
+                    .ignoresSafeArea()
+            )
+             */
         }
         .navigationTitle("")
-        .navigationViewStyle(StackNavigationViewStyle())
     }
     
 }
 
 
 #Preview {
-    MainView()
+    Pokedex()
 }

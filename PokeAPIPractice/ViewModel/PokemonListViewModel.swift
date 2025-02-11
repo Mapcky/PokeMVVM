@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PokemonListViewModel: ViewModelBase {
+class PokemonListViewModel: ObservableObject {
 
     // MARK: - PROPERTIES
     @Published var pokemonL: PokemonList?
@@ -30,7 +30,6 @@ class PokemonListViewModel: ViewModelBase {
     }
 
     func getFullList() {
-        self.loadingState = .loading
         webService.getPokemonList(limit: 100000, offset: 0) { result in
             DispatchQueue.main.async {
                 switch result {
@@ -38,10 +37,8 @@ class PokemonListViewModel: ViewModelBase {
                     self.pokemonL = data
                     self.loadNextPage()
                     self.currentPage += 1
-                    self.loadingState = .success
                 case .failure(let error):
                     print(error.localizedDescription)
-                    self.loadingState = .failed
                 }
             }
         }
@@ -65,9 +62,6 @@ class PokemonListViewModel: ViewModelBase {
     func getListWithPaging() {
         guard !isLoading else { return }
         isLoading = true
-        DispatchQueue.main.async {
-            self.loadingState = .loading
-        }
         let offset = currentPage * pageSize
         webService.getPokemonList(limit: pageSize, offset: offset) { result in
             
@@ -82,13 +76,9 @@ class PokemonListViewModel: ViewModelBase {
                         self.pokemonL?.results.append(contentsOf: data.results)
                     }
                     self.currentPage += 1
-                    self.loadingState = .success
                     
                 case .failure(let error):
                     print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        self.loadingState = .failed
-                    }
                 }//: switch
             }//: DispatchQ
         }//: Webservice

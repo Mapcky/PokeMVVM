@@ -17,20 +17,7 @@ struct PokemonDetailView: View {
     
     // MARK: - BODY
     var body: some View {
-        VStack{
-            switch(pokemonVM.loadingState) {
-            case .success:
-                PokemonView(pokemonVM: pokemonVM)
-                
-            case .failed:
-                Text("Fail")
-            case .loading:
-                Text("Loading")
-                    .font(.largeTitle)
-            case .none:
-                Text("none")
-            }
-        }
+            PokemonView(pokemonVM: pokemonVM)
     }
 }
 

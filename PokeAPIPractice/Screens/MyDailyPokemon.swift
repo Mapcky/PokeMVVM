@@ -8,8 +8,22 @@
 import SwiftUI
 
 struct MyDailyPokemon: View {
+    // MARK: - PROPERTIES
+    
+    @ObservedObject private var timeVM = TimeViewModel()
+    @ObservedObject private var pokemon = PokemonViewModel()
+    private var urlDaily: String {
+        return "https://pokeapi.co/api/v2/pokemon/" + String(timeVM.randomDailyNumber)
+    }
+    init(timeVM: TimeViewModel = TimeViewModel()) {
+        self.timeVM = timeVM
+    }
+    // MARK: - BODY
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        PokemonCard(pokemon: pokemon)
+            .onAppear(perform: {
+                pokemon.getPokemonByUrl(url: urlDaily)
+            })
     }
 }
 
