@@ -12,8 +12,6 @@ class PokemonViewModel: ObservableObject {
     @Published private var pokemon: Pokemon?
     private var webService = WebService()
     
-    
-    
     init(pokemon: Pokemon? = nil) {
         self.pokemon = pokemon
     }

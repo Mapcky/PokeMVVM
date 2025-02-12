@@ -24,6 +24,9 @@ struct MyDailyPokemon: View {
             .onAppear(perform: {
                 pokemon.getPokemonByUrl(url: urlDaily)
             })
+            .onChange(of: urlDaily, {
+                pokemon.getPokemonByUrl(url: urlDaily)
+            })
     }
 }
 

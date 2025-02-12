@@ -15,7 +15,7 @@ struct PokemonListView: View {
     // MARK: - BODY
     var body: some View {
        List {
-           ForEach(PokemonLVM.pokemonL?.results ?? [], id:\.url) { pokemon in
+           ForEach(PokemonLVM.List, id:\.url) { pokemon in
                Text("\(pokemon.name)")
             }
            

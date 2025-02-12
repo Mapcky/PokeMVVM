@@ -24,9 +24,9 @@ struct URLImage: View {
                 .resizable()
                 .scaledToFit()
         } else {
-            Image("pokeball")
-                .resizable()
-                .frame(width: 40, height: 40) 
+                Image("pokeball")
+                    .resizable()
+                    .frame(width: 40, height: 40) 
         }
     }
 }

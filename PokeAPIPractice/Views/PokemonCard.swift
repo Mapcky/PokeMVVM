@@ -29,7 +29,7 @@ struct PokemonCard: View {
                 
             }) {
                 HStack (spacing: 8) {
-                    Text("Add")
+                    Text("Catch!")
                     
                     Image(systemName: "arrow.right.circle")
                         .imageScale(.large)

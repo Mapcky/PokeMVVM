@@ -30,9 +30,6 @@ struct Pokedex: View {
                             pokemonListVM.isSearching = pokeName.isEmpty
                             pokemonListVM.filterByName(search: pokeName)
                         }
-                    Button(action: {
-                    }, label:
-                            {Image(systemName: "magnifyingglass")})
                 }
                 
                 .padding()
@@ -41,26 +38,7 @@ struct Pokedex: View {
                     .font(.title3)
                 PokemonGridView(pokemonLVM: pokemonListVM)
             }
-            /*
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 30)
-                        .strokeBorder(Color.red, lineWidth: 14) // Solo borde
-                        .frame(height: UIScreen.main.bounds.height * 0.5)
-                        .offset(y: -UIScreen.main.bounds.height * 0.27)
-                    
-                    // Marco blanco inferior
-                    RoundedRectangle(cornerRadius: 30)
-                        .strokeBorder(Color.white, lineWidth: 20) // Solo borde
-                        .frame(height: UIScreen.main.bounds.height * 0.5)
-                        .offset(y: UIScreen.main.bounds.height * 0.25)
-                    Rectangle()
-                        .fill(Color.black)
-                        .frame(height: 100)
-                }
-                    .ignoresSafeArea()
-            )
-             */
+            .background(LinearGradient(colors: [.white, Color("DexLight"),Color("DexDark")], startPoint: .topLeading, endPoint: .bottomTrailing))
         }
         .navigationTitle("")
     }
