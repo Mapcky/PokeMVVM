@@ -11,6 +11,7 @@ struct GridItemView: View {
     // MARK: - PROPERTIES
     var urlPokeon: String
     @ObservedObject private var pokemonVM = PokemonViewModel()
+    @Binding var path: [String]
     
     init(urlPokeon: String) {
         self.urlPokeon = urlPokeon

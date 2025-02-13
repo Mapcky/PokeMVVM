@@ -15,6 +15,8 @@ struct MyDailyPokemon: View {
     private var urlDaily: String {
         return "https://pokeapi.co/api/v2/pokemon/" + String(timeVM.randomDailyNumber)
     }
+    
+    // MARK: - FUNCTIONS
     init(timeVM: TimeViewModel = TimeViewModel()) {
         self.timeVM = timeVM
     }
@@ -25,10 +27,13 @@ struct MyDailyPokemon: View {
                 pokemon.getPokemonByUrl(url: urlDaily)
             })
             .onChange(of: urlDaily, {
-                pokemon.getPokemonByUrl(url: urlDaily)
+                DispatchQueue.main.async {
+                    pokemon.getPokemonByUrl(url: urlDaily)
+                }
             })
     }
 }
+
 
 #Preview {
     MyDailyPokemon()

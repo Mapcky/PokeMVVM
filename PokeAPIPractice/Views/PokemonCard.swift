@@ -17,7 +17,7 @@ struct PokemonCard: View {
     
     // MARK: - BODY
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(alignment: .center, spacing: 15) {
             URLImage(url: pokemon.spriteNormal)
                 .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
             Text(pokemon.name)
@@ -47,7 +47,7 @@ struct PokemonCard: View {
                 isAnimating = true
             }
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 600, alignment: .center)
         .background(TypeGradient.from(pokemon.firstType).gradient)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .padding(.horizontal, 20)
