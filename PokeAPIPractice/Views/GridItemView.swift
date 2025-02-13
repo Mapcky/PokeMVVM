@@ -24,9 +24,12 @@ struct GridItemView: View {
                     URLImage(url: pokemonVM.spriteNormal)
                         .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 8, x: 6, y: 8)
                         .padding(3)
-                        .background(Image("grass")
-                            .resizable().clipShape(RoundedRectangle(cornerRadius: 12)))
-                        .background(RoundedRectangle(cornerRadius: 12).stroke(Color.black, lineWidth: 2))
+                        .background(
+                            Image("pokeballSVG2")
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundStyle(.blue)
+                            .opacity(0.12))
                     
                     Text(pokemonVM.id)
                         .font(.custom("PressStart2P-Regular", size: 24))
