@@ -11,16 +11,16 @@ struct PokemonCard: View {
     
     // MARK: - PROPERTIES
     @State private var isAnimating: Bool = false
-    @ObservedObject var pokemon = PokemonViewModel()
+    @ObservedObject var pokemonVM: PokemonViewModel
 
     // MARK: - FUNCTIONS
     
     // MARK: - BODY
     var body: some View {
         VStack(alignment: .center, spacing: 15) {
-            URLImage(url: pokemon.spriteNormal)
+            URLImage(url: pokemonVM.spriteNormal)
                 .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
-            Text(pokemon.name)
+            Text(pokemonVM.name)
                 .foregroundColor(Color.white)
                 .font(.custom("PressStart2P-Regular", size: 24))
                 .fontWeight(.heavy)
@@ -48,12 +48,12 @@ struct PokemonCard: View {
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 600, alignment: .center)
-        .background(TypeGradient.from(pokemon.firstType).gradient)
+        .background(TypeGradient.from(pokemonVM.firstType).gradient)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .padding(.horizontal, 20)
     }
 }
 
 #Preview {
-    PokemonCard()
+    PokemonCard(pokemonVM: PokemonViewModel(url: ""))
 }

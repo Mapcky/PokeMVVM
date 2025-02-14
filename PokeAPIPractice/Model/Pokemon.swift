@@ -14,6 +14,7 @@ struct Pokemon: Decodable {
     var sprites: sprites
     var weight: Double
     var types: [PokemonTypeEntry]
+    var abilities: [Abilities]
     
     struct sprites: Decodable {
         var front_default: String
@@ -24,8 +25,18 @@ struct Pokemon: Decodable {
         var slot: Int
         var type: TypeInfo
     }
-
+    
     struct TypeInfo: Decodable {
+        var name: String
+        var url: String
+    }
+    
+    struct Abilities: Decodable {
+        var ability: Ability
+        var is_hidden: Bool
+    }
+    
+    struct Ability: Decodable {
         var name: String
         var url: String
     }

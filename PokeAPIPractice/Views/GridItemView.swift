@@ -9,14 +9,9 @@ import SwiftUI
 
 struct GridItemView: View {
     // MARK: - PROPERTIES
-    var urlPokeon: String
-    @ObservedObject private var pokemonVM = PokemonViewModel()
+    @ObservedObject var pokemonVM: PokemonViewModel
     @Binding var path: [String]
-    
-    init(urlPokeon: String) {
-        self.urlPokeon = urlPokeon
-        pokemonVM.getPokemonByUrl(url: urlPokeon)
-    }
+
     // MARK: - BODY
     var body: some View {
         NavigationLink(destination: PokemonDetailView(pokemonVM: pokemonVM)) {
@@ -43,14 +38,14 @@ struct GridItemView: View {
                     .font(.custom("PressStart2P-Regular", size: 10))
                     .foregroundStyle(.black)
                     .padding(.vertical, 8)
-                
             }//: VStack
         }//:NAV
-        
+
     }
+    
 }
 
 #Preview {
-    GridItemView(urlPokeon: "https://pokeapi.co/api/v2/pokemon/700")
+    GridItemView(pokemonVM: PokemonViewModel(url: "https://pokeapi.co/api/v2/pokemon/700"), path: .constant([]))
 }
 

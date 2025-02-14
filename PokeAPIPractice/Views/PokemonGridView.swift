@@ -21,7 +21,7 @@ struct PokemonGridView: View {
         ScrollView(.vertical, showsIndicators: false) {
             LazyVGrid(columns: gridLayout, alignment: .center, spacing: columnSpacing, pinnedViews: [], content: {
                 ForEach(pokemonLVM.List, id:\.url) { pokemon in
-                    GridItemView(pokemonVM: PokemonViewModel, path: $path)
+                    GridItemView(pokemonVM: PokemonViewModel(url: pokemon.url), path: $path)
                         .onAppear {
                             if pokemon == pokemonLVM.List.last {
                                 pokemonLVM.loadNextPage()

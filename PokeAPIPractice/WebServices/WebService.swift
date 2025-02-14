@@ -58,7 +58,7 @@ class WebService {
                     completion(.success(pokeResponse))
                 }
             }//DispatchQ
-
+            
         }.resume()  //: URLSession
         
     }
@@ -83,7 +83,7 @@ class WebService {
                     completion(.success(pokeResponse))
                 }
             }//DispatchQ
-
+            
         }.resume()  //: URLSession
         
     }
@@ -94,7 +94,7 @@ class WebService {
         }
         
         URLSession.shared.dataTask(with: timeApiUrl) { (data, _, error) in
-        
+            
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
             }

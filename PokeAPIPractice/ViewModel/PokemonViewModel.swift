@@ -11,9 +11,9 @@ class PokemonViewModel: ObservableObject {
     
     @Published private var pokemon: Pokemon?
     private var webService = WebService()
-    
-    init(pokemon: Pokemon? = nil) {
+    init(pokemon: Pokemon? = nil, url: String?) {
         self.pokemon = pokemon
+        getPokemonByUrl(url: url ?? "")
     }
     
     let uuid = UUID()
@@ -58,6 +58,17 @@ class PokemonViewModel: ObservableObject {
     
     var firstType: String {
         pokemon?.types.first?.type.name ?? ""
+    }
+    
+    var secondType: String {
+        if pokemon?.types.count ?? 0 > 1 {
+            return pokemon?.types.last?.type.name ?? ""
+        }
+        return ""
+    }
+    
+    var abilitiesNames: [String] {
+        return pokemon?.abilities.map { $0.ability.name } ?? []
     }
     
     

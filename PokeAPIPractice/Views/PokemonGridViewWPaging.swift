@@ -10,6 +10,7 @@ import SwiftUI
 struct PokemonGridViewWPaging: View {
     // MARK: - PROPERTIES
     @ObservedObject var pokemonLVM: PokemonListViewModel
+    @Binding var path: [String]
     private let columnSpacing: CGFloat = 10
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
@@ -21,7 +22,7 @@ struct PokemonGridViewWPaging: View {
             LazyVGrid(columns: gridLayout, alignment: .center, spacing: columnSpacing, pinnedViews: [], content: {
                 if let pokemonResults = pokemonLVM.pokemonL?.results {
                     ForEach(pokemonResults, id:\.url) { pokemon in
-                        GridItemView(urlPokeon: pokemon.url)
+                        GridItemView(pokemonVM: PokemonViewModel(url: pokemon.url), path: $path)
                             .onAppear {
                                 if pokemon == pokemonResults.last {
                                     pokemonLVM.getListWithPaging()
@@ -42,5 +43,5 @@ struct PokemonGridViewWPaging: View {
 
 
 #Preview {
-    PokemonGridViewWPaging(pokemonLVM: PokemonListViewModel())
+    PokemonGridViewWPaging(pokemonLVM: PokemonListViewModel(), path: .constant([]))
 }

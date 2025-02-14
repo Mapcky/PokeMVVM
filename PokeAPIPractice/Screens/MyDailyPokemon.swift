@@ -10,31 +10,33 @@ import SwiftUI
 struct MyDailyPokemon: View {
     // MARK: - PROPERTIES
     
-    @ObservedObject private var timeVM = TimeViewModel()
-    @ObservedObject private var pokemon = PokemonViewModel()
-    private var urlDaily: String {
-        return "https://pokeapi.co/api/v2/pokemon/" + String(timeVM.randomDailyNumber)
-    }
+    @ObservedObject var timeVM : TimeViewModel
+    @ObservedObject private var pokemonVM: PokemonViewModel
     
     // MARK: - FUNCTIONS
-    init(timeVM: TimeViewModel = TimeViewModel()) {
+    init(timeVM: TimeViewModel, pokemonVM: PokemonViewModel? = nil) {
         self.timeVM = timeVM
+        var urlDaily: String {
+            return "https://pokeapi.co/api/v2/pokemon/" + String(timeVM.randomDailyNumber)
+        }
+        self.pokemonVM = PokemonViewModel(url: urlDaily)
     }
+    
     // MARK: - BODY
     var body: some View {
-        PokemonCard(pokemon: pokemon)
-            .onAppear(perform: {
-                pokemon.getPokemonByUrl(url: urlDaily)
-            })
-            .onChange(of: urlDaily, {
-                DispatchQueue.main.async {
-                    pokemon.getPokemonByUrl(url: urlDaily)
-                }
-            })
+        VStack {
+            Spacer()
+            PokemonCard(pokemonVM: pokemonVM)
+                .offset(y:-40)
+            Spacer()
+        }
+        .background(LinearGradient(colors: [.white, Color("DexLight"),Color("DexDark")], startPoint: .topLeading, endPoint: .bottomTrailing))
+        .ignoresSafeArea()
     }
 }
 
 
-#Preview {
-    MyDailyPokemon()
-}
+ #Preview {
+     MyDailyPokemon(timeVM: TimeViewModel())
+ }
+ 

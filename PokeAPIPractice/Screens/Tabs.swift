@@ -11,7 +11,8 @@ struct Tabs: View {
     // MARK: - PROPERTIES
     @State private var selectedTab: selectedTab = .Pokedex
     @State private var path: [String] = []
-    @ObservedObject var pokemonListVM: PokemonListViewModel = PokemonListViewModel()
+    @ObservedObject private var pokemonListVM: PokemonListViewModel = PokemonListViewModel()
+    @ObservedObject private var TimeVM: TimeViewModel = TimeViewModel()
     // MARK: - BODY
     var body: some View {
             VStack {
@@ -56,7 +57,7 @@ struct Tabs: View {
                                 Image(systemName: "arrow.backward.circle")
                                     .font(.system(size: 40))
                             }
-                        }
+                       }
                         Spacer()
                         Button(action: {}) {
                             Image(systemName: "person.crop.circle.fill")
@@ -76,16 +77,13 @@ struct Tabs: View {
                         case .Pokedex:
                             Pokedex(pokemonListVM: pokemonListVM, path: $path)
                         case .Daily:
-                            VStack {
-                                Spacer()
-                                MyDailyPokemon()
-                                Spacer()
-                            }//:VSTACK CENTER
-                            .offset(y: -40)
+                            MyDailyPokemon(timeVM: TimeVM)
                         case .Profile:
                             EmptyView()
                         }//: SWITCH
+                        
                     }
+                    
                     
                     Rectangle()
                         .fill()
@@ -96,7 +94,7 @@ struct Tabs: View {
                         .clipShape(TopSemiCircleShape(cutoutRatio: 6.05))
                         .frame(height: 80)
                     Rectangle()
-                        .fill(Color("DexTopDark"))
+                        .fill(LinearGradient(colors: [Color("DexTop"), Color("DexTopDark"),Color("DexTopDark")], startPoint: .bottomLeading, endPoint: .bottomTrailing))
                         .clipShape(TopSemiCircleShape(cutoutRatio: 6))
                         .ignoresSafeArea()
                         .frame(height: 80)
@@ -119,9 +117,10 @@ struct Tabs: View {
                                 .frame(width: 130, height: 130)
                                 .position(x: UIScreen.main.bounds.width, y: 90)
                         })//: OVERLAY
-                    HStack {
+                     HStack {
                         Button(action: {
                             self.selectedTab = .Pokedex
+                            path.removeAll()
                         }, label: {
                             VStack(spacing: 5) {
                                 Image("Pokedex")
@@ -135,6 +134,7 @@ struct Tabs: View {
                         
                         Button(action: {
                             self.selectedTab = .Daily
+                            path.removeAll()
                         }, label: {
                             VStack(spacing: 5) {
                                 Image("pokeballSVG")

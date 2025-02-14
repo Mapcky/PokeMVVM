@@ -39,5 +39,5 @@ struct PokemonView: View {
 
 #Preview
 {
-    PokemonView(pokemonVM: PokemonViewModel())
+    PokemonView(pokemonVM: PokemonViewModel(url: ""))
 }

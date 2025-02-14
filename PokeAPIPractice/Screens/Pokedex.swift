@@ -33,8 +33,8 @@ struct Pokedex: View {
                         .bold()
                 PokemonGridView(pokemonLVM: pokemonListVM, path: $path)
             }
-            .ignoresSafeArea()
             .background(LinearGradient(colors: [.white, Color("DexLight"),Color("DexDark")], startPoint: .topLeading, endPoint: .bottomTrailing))
+            .ignoresSafeArea()
         }
 }
 
