@@ -55,5 +55,5 @@ struct PokemonCard: View {
 }
 
 #Preview {
-    PokemonCard(pokemonVM: PokemonViewModel(url: ""))
+    PokemonCard(pokemonVM: PokemonViewModel(url: "https://pokeapi.co/api/v2/pokemon/700"))
 }

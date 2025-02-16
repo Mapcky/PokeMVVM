@@ -72,13 +72,6 @@ struct PokemonDetailView: View {
         
         .background(LinearGradient(colors: [.white, Color("DexLight"),Color("DexDark")], startPoint: .topLeading, endPoint: .bottomTrailing))
         .ignoresSafeArea()
-        .overlay {
-            Button(action: {
-                dismiss()
-            }, label: {Text("asdsa")})
-                .offset(x:-100,y:-400)
-                .font(.system(size: 40))
-        }
     }
     
 }

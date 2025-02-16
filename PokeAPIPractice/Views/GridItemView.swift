@@ -14,7 +14,7 @@ struct GridItemView: View {
 
     // MARK: - BODY
     var body: some View {
-        NavigationLink(destination: PokemonDetailView(pokemonVM: pokemonVM)) {
+        //NavigationLink(destination: PokemonDetailView(pokemonVM: pokemonVM)) {
             VStack {
                 ZStack(alignment: .bottomLeading) {
                     URLImage(url: pokemonVM.spriteNormal)
@@ -39,8 +39,7 @@ struct GridItemView: View {
                     .foregroundStyle(.black)
                     .padding(.vertical, 8)
             }//: VStack
-        }//:NAV
-
+        //}//:NAV
     }
     
 }
