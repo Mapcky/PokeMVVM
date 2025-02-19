@@ -7,36 +7,36 @@
 
 import Foundation
 
-struct Pokemon: Decodable {
+struct Pokemon: Codable, Hashable {
     var name: String
     var id: Int
     var height: Double
-    var sprites: sprites
+    var sprites: sprites?
     var weight: Double
     var types: [PokemonTypeEntry]
     var abilities: [Abilities]
     
-    struct sprites: Decodable {
+    struct sprites: Codable, Hashable {
         var front_default: String
         var front_shiny: String
     }
     
-    struct PokemonTypeEntry: Decodable {
+    struct PokemonTypeEntry: Codable, Hashable {
         var slot: Int
         var type: TypeInfo
     }
     
-    struct TypeInfo: Decodable {
+    struct TypeInfo: Codable, Hashable {
         var name: String
         var url: String
     }
     
-    struct Abilities: Decodable {
+    struct Abilities: Codable, Hashable {
         var ability: Ability
         var is_hidden: Bool
     }
     
-    struct Ability: Decodable {
+    struct Ability: Codable, Hashable {
         var name: String
         var url: String
     }

@@ -9,14 +9,13 @@ import Foundation
 
 class PokemonViewModel: ObservableObject {
     
-    @Published private var pokemon: Pokemon?
+    @Published var pokemon: Pokemon?
     private var webService = WebService()
     init(pokemon: Pokemon? = nil, url: String?) {
         self.pokemon = pokemon
         getPokemonByUrl(url: url ?? "")
     }
     
-    let uuid = UUID()
     
     var name: String {
         guard let pokemonName = pokemon?.name, let first = pokemonName.first else {
@@ -49,11 +48,11 @@ class PokemonViewModel: ObservableObject {
     }
     
     var spriteNormal: String {
-        pokemon?.sprites.front_default ?? ""
+        pokemon?.sprites?.front_default ?? ""
     }
     
     var spriteShiny: String {
-        pokemon?.sprites.front_shiny ?? ""
+        pokemon?.sprites?.front_shiny ?? ""
     }
     
     var firstType: String {
