@@ -11,7 +11,7 @@ class PokemonListViewModel: ObservableObject {
 
     // MARK: - PROPERTIES
     @Published var pokemonL: PokemonList?
-    @Published var List: [results] = []
+    @Published var List: [Results] = []
     @Published var currentPage: Int = 0
     var isSearching: Bool = false
     let webService = WebService()

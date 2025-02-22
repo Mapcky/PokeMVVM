@@ -18,11 +18,11 @@ class UserViewModel {
         loadUser()
     }
     
-    var myPokemonsList: Set<Pokemon> {
+    var myPokemonsList: [Pokemon] {
         if let user = user {
             return user.myPokemons
         } else {
-            return Set<Pokemon>()
+            return []
         }
     }
     
@@ -32,7 +32,7 @@ class UserViewModel {
     }
     
     func addPokemon(_ pokemon: Pokemon) {
-        user?.myPokemons.insert(pokemon)
+        user?.myPokemons.append(pokemon)
         saveUser()
     }
     

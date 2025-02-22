@@ -9,10 +9,10 @@ import Foundation
 
 struct PokemonList: Decodable {
     var count: Int
-    var results: [results]
+    var results: [Results]
 }
 
-struct results: Decodable, Equatable {
+struct Results: Decodable, Equatable {
     var name: String
     var url: String
 }

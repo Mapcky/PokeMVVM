@@ -11,9 +11,12 @@ struct Tabs: View {
     // MARK: - PROPERTIES
     @State private var selectedTab: SelectedTab = .Pokedex
     @State private var path: [String] = []
+    
     @ObservedObject private var pokemonListVM: PokemonListViewModel = PokemonListViewModel()
     @ObservedObject private var timeVM: TimeViewModel = TimeViewModel()
     private var userVM: UserViewModel = UserViewModel()
+    
+    
     // MARK: - BODY
     @MainActor
     @ViewBuilder
@@ -21,7 +24,7 @@ struct Tabs: View {
         VStack {
             // MARK: - TOP DEX
             BezelTop(selectedTab: $selectedTab, path: $path)
-            ZStack(alignment: .bottom){
+            ZStack(alignment: .bottom) {
                 NavigationStack(path: $path) {
                     VStack {
                         switch selectedTab {

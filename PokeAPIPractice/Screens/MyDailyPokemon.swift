@@ -28,7 +28,7 @@ struct MyDailyPokemon: View {
     var body: some View {
         VStack {
             Spacer()
-            PokemonCard(pokemonVM: pokemonVM, userVM: userVM, maxHeight: 600)
+            PokemonCard(pokemonVM: pokemonVM, userVM: userVM)
                 .offset(y:-40)
             Spacer()
         }
@@ -43,6 +43,6 @@ struct MyDailyPokemon: View {
 
 
  #Preview {
-     MyDailyPokemon(timeVM: TimeViewModel(), userVM: UserViewModel(user: User(name: "name", myPokemons: [Pokemon(name: "Dragapult", id: 2, height: 1, sprites: nil, weight: 1, types: [], abilities: [])])))
+     MyDailyPokemon(timeVM: TimeViewModel(), userVM: UserViewModel(user: User(name: "name", myPokemons: [Pokemon(name: "Dragapult", id: 2, height: 1, sprites: nil, weight: 1, types: [], abilities: [], stats: [])])))
  }
  

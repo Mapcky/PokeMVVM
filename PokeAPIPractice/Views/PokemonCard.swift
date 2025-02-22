@@ -24,7 +24,7 @@ struct PokemonCard: View {
                     .scaledToFit()
                     .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
             } placeholder: {
-                ProgressView("Locading...")
+                ProgressView("Loading...")
             }
             Text(pokemonVM.name)
                 .foregroundColor(Color.white)
@@ -60,7 +60,7 @@ struct PokemonCard: View {
                 catchActive = !userVM.pokemonOwned(pokemon)
             }
         })
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: maxHeight, alignment: .center)
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 600, alignment: .center)
         .background(TypeGradient.from(pokemonVM.firstType).gradient)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .padding(.horizontal, 20)
@@ -68,5 +68,5 @@ struct PokemonCard: View {
 }
 
 #Preview {
-    PokemonCard(pokemonVM: PokemonViewModel(url: "https://pokeapi.co/api/v2/pokemon/700"), userVM: UserViewModel(user: User(name: "name", myPokemons: [Pokemon(name: "Dragapult", id: 2, height: 1, sprites: nil, weight: 1, types: [], abilities: [])])))
+    PokemonCard(pokemonVM: PokemonViewModel(url: "https://pokeapi.co/api/v2/pokemon/700"), userVM: UserViewModel(user: User(name: "name", myPokemons: [Pokemon(name: "Dragapult", id: 2, height: 1, sprites: nil, weight: 1, types: [], abilities: [], stats: [])])))
 }

@@ -56,18 +56,24 @@ class PokemonViewModel: ObservableObject {
     }
     
     var firstType: String {
-        pokemon?.types.first?.type.name ?? ""
+        guard let firstType = pokemon?.types.first?.type.name, let first = firstType.first else {
+            return ""
+        }
+        return first.uppercased() + firstType.dropFirst()
     }
     
     var secondType: String {
         if pokemon?.types.count ?? 0 > 1 {
-            return pokemon?.types.last?.type.name ?? ""
+            guard let secondType = pokemon?.types.last?.type.name, let first = secondType.first else { return "" }
+            
+            return first.uppercased() + secondType.dropFirst()
         }
         return ""
     }
     
-    var abilitiesNames: [String] {
-        return pokemon?.abilities.map { $0.ability.name } ?? []
+    var abilities: [Abilities] {
+        guard let abilities = pokemon?.abilities else { return  [] }
+        return abilities
     }
     
     

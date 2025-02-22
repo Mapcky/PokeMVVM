@@ -10,6 +10,6 @@ import Foundation
 struct User: Codable{
     // MARK: - PROPERTIES
     var name: String
-    var myPokemons: Set<Pokemon>
+    var myPokemons: [Pokemon]
     
 }
