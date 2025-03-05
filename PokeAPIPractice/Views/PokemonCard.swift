@@ -15,10 +15,13 @@ struct PokemonCard: View {
     var userVM: UserViewModel
     @State private var catchActive: Bool = true
     @State private var isPresented: Bool = false
+    @State private var showConfirmationAlert: Bool = false
+    @State private var selectedPokemon: Pokemon?
     // MARK: - FUNCTIONS
     
     // MARK: - BODY
     var body: some View {
+        
         VStack(alignment: .center, spacing: 15) {
             AsyncImage(url: URL(string: pokemonVM.spriteNormal)) { img in
                 img.resizable()
@@ -55,18 +58,53 @@ struct PokemonCard: View {
             }//: BUTTON
             .disabled(!catchActive)
             /*
-            Button("pop"){
-                userVM.popPokemonFromList()
-            }
+             Button("pop"){
+             userVM.popPokemonFromList()
+             }
              */
-        }
+        }//: VSTACK
         .sheet(isPresented: $isPresented, content: {
-            PokemonInventoryGridItem(userVM: userVM, onPokemonSelected: { pokemon in
-                guard let newPokemon = pokemonVM.pokemon else { return }
-                userVM.switchPokemon(selectedPokemon: pokemon, newPokemon: newPokemon)
-                catchActive = false
-            })
-        })
+            ZStack {
+                PokemonInventoryGridItem(userVM: userVM, onPokemonSelected: { pokemon in
+                    selectedPokemon = pokemon
+                    showConfirmationAlert = true
+                })
+                if showConfirmationAlert {
+                    if let selectedPokemon = selectedPokemon, let newPokemon = pokemonVM.pokemon {
+                        Color.black.opacity(0.5)
+                            .edgesIgnoringSafeArea(.all)
+                        VStack(spacing: 20) {
+                            Text("Switch \(selectedPokemon.name) for \(newPokemon.name)?")
+                                .foregroundColor(.white)
+                                .font(.custom("PressStart2P-Regular", size: 18))
+                            
+                            HStack {
+                                Button("Cancelar") {
+                                    showConfirmationAlert = false
+                                }
+                                .padding()
+                                .background(Capsule().strokeBorder(Color.white))
+                                .foregroundColor(.white)
+                                
+                                Button("OK") {
+                                    userVM.switchPokemon(selectedPokemon: selectedPokemon, newPokemon: newPokemon)
+                                    catchActive = false
+                                    isPresented = false
+                                    showConfirmationAlert = false
+                                }
+                                .padding()
+                                .background(Capsule().strokeBorder(Color.white))
+                                .foregroundColor(.white)
+                            }
+                        }
+                        .frame(maxWidth: 300)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.8)))
+                        .shadow(radius: 10)
+                    }
+                }//: ALERT
+            }//: ZSTACK SHEET
+        })//: SHEET
         .onAppear {
             withAnimation(.easeOut(duration: 0.5)) {
                 isAnimating = true
@@ -81,7 +119,7 @@ struct PokemonCard: View {
         .background(TypeGradient.from(pokemonVM.firstType).gradient)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .padding(.horizontal, 20)
-    }
+    }//: BODY
 }
 
 #Preview {

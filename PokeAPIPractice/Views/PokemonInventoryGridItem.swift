@@ -11,7 +11,6 @@ struct PokemonInventoryGridItem: View {
     // MARK: - PROPERTIES
     var userVM: UserViewModel
     var onPokemonSelected: (Pokemon) -> Void
-    @Environment(\.dismiss) private var dismiss
     private let columnSpacing: CGFloat = 10
     private let rowSpacing: CGFloat = 10
     private var gridLayout: [GridItem] {
@@ -42,7 +41,6 @@ struct PokemonInventoryGridItem: View {
                 .padding(.horizontal, 20)
                 .onTapGesture {
                     onPokemonSelected(pokemon)
-                    dismiss()
                 }
             }//:Loop
         })//: VGrid
