@@ -14,7 +14,7 @@ struct UserInventory: View {
     // MARK: - BODY
     var body: some View {
         ScrollView {
-            PokemonInventoryGridItem(userVM: userVM)
+            PokemonInventoryGridItem(userVM: userVM, onPokemonSelected: {pokemon in })
         }//:VSTACK
         .background(LinearGradient(colors: [.white, Color("DexLight"),Color("DexDark")], startPoint: .topLeading, endPoint: .bottomTrailing))
         .frame(maxWidth: .infinity, maxHeight: .infinity)

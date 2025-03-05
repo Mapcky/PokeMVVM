@@ -12,6 +12,7 @@ struct MyDailyPokemon: View {
     
     @ObservedObject var timeVM : TimeViewModel
     @ObservedObject private var pokemonVM: PokemonViewModel
+    @State private var isPresented: Bool = false
     var userVM: UserViewModel
     
     // MARK: - FUNCTIONS
@@ -31,8 +32,9 @@ struct MyDailyPokemon: View {
             PokemonCard(pokemonVM: pokemonVM, userVM: userVM)
                 .offset(y:-40)
             Spacer()
-        }
+        }//: VSTACK
         .background(LinearGradient(colors: [.white, Color("DexLight"),Color("DexDark")], startPoint: .topLeading, endPoint: .bottomTrailing))
+        //: BACKGROUND
         .ignoresSafeArea()
         .task(id: timeVM.randomDailyNumber, {
             let newUrl = "https://pokeapi.co/api/v2/pokemon/\(timeVM.randomDailyNumber)"

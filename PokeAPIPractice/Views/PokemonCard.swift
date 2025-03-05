@@ -14,6 +14,7 @@ struct PokemonCard: View {
     @ObservedObject var pokemonVM: PokemonViewModel
     var userVM: UserViewModel
     @State private var catchActive: Bool = true
+    @State private var isPresented: Bool = false
     // MARK: - FUNCTIONS
     
     // MARK: - BODY
@@ -32,24 +33,40 @@ struct PokemonCard: View {
                 .fontWeight(.heavy)
                 .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 3, x: 2, y: 2)
             Button(action: {
-                userVM.addPokemon(pokemonVM.pokemon!)
-                catchActive = false
+                if !userVM.isInventoryFull {
+                    userVM.addPokemon(pokemonVM.pokemon!)
+                    catchActive = false
+                } else {
+                    isPresented.toggle()
+                }
             }) {
                 HStack (spacing: 8) {
                     Text("Catch!")
-                        .bold()
+                        .font(.custom("PressStart2P-Regular", size: 11))
                     Image(systemName: "arrow.right.circle")
                         .imageScale(.large)
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
                 .background(
-                    Capsule().strokeBorder(.white, lineWidth: 1.25)
+                    Capsule().strokeBorder(.white, style: StrokeStyle(lineWidth: 1.25,dash: [25, 5]))
                 )
                 .foregroundStyle(catchActive ? .white : .black)
             }//: BUTTON
             .disabled(!catchActive)
+            /*
+            Button("pop"){
+                userVM.popPokemonFromList()
+            }
+             */
         }
+        .sheet(isPresented: $isPresented, content: {
+            PokemonInventoryGridItem(userVM: userVM, onPokemonSelected: { pokemon in
+                guard let newPokemon = pokemonVM.pokemon else { return }
+                userVM.switchPokemon(selectedPokemon: pokemon, newPokemon: newPokemon)
+                catchActive = false
+            })
+        })
         .onAppear {
             withAnimation(.easeOut(duration: 0.5)) {
                 isAnimating = true

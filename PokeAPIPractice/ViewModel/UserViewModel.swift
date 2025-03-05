@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Observation
 
 @MainActor
 @Observable
@@ -25,10 +26,22 @@ class UserViewModel {
             return []
         }
     }
-    
+   /*
     func popPokemonFromList() {
-        user!.myPokemons = []
+        user!.myPokemons.popLast()
         saveUser()
+    }
+    */
+     
+    
+    func switchPokemon(selectedPokemon: Pokemon, newPokemon: Pokemon) {
+        user?.myPokemons.removeAll { $0 == selectedPokemon }
+        user?.myPokemons.append(newPokemon)
+        saveUser()
+    }
+    
+    var isInventoryFull: Bool {
+        return myPokemonsList.count == 6
     }
     
     func addPokemon(_ pokemon: Pokemon) {

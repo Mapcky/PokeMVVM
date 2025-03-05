@@ -49,7 +49,7 @@ struct Abilities: Codable, Hashable {
 struct StatEntry: Codable, Hashable {
     var baseStat: Int
     var effort: Int
-    var stat: [Stat]
+    var stat: Stat
     
     struct Stat: Codable, Hashable {
         var name: String
