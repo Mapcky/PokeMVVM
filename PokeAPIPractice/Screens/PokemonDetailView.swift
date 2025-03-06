@@ -21,6 +21,7 @@ struct PokemonDetailView: View {
             VStack(spacing: 15) {
                 Text(pokemonVM.name)
                     .font(.custom("PressStart2P-Regular", size: 22))
+                    .offset()
                 Text("No \(pokemonVM.id)")
                     .font(.custom("PressStart2P-Regular", size: 18))
                 
@@ -75,7 +76,7 @@ struct PokemonDetailView: View {
                 HStack(spacing: 30) {
                     ForEach(pokemonVM.abilities, id:\.self) { abilities in
                         VStack(spacing: 10) {
-                            Text(abilities.ability.name)
+                            Text(abilities.ability.name.firstUppercased)
                             if abilities.is_hidden {
                                 Text("Hidden ability")
                                     .font(.custom("PressStart2P-Regular", size: 10))
@@ -89,8 +90,16 @@ struct PokemonDetailView: View {
                 .font(.custom("PressStart2P-Regular", size: 12))
                 Divider()
                 
-                
-
+                // MARK: - STATS
+                if let pokemon = pokemonVM.pokemon {
+                    StatBar(title: pokemon.stats[0].stat.name, statValue: pokemon.stats[0].baseStat)
+                    StatBar(title: pokemon.stats[1].stat.name, statValue: pokemon.stats[1].baseStat)
+                    StatBar(title: pokemon.stats[2].stat.name, statValue: pokemon.stats[2].baseStat)
+                    StatBar(title: pokemon.stats[3].stat.name, statValue: pokemon.stats[3].baseStat)
+                    StatBar(title: pokemon.stats[4].stat.name, statValue: pokemon.stats[4].baseStat)
+                    StatBar(title: pokemon.stats[5].stat.name, statValue: pokemon.stats[5].baseStat)
+                }
+                Color.clear.frame(height: 120)
             }//:VSTACK
         }//: SCROLL
         .navigationBarBackButtonHidden(true)

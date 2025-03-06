@@ -65,26 +65,31 @@ struct PokemonCard: View {
         }//: VSTACK
         .sheet(isPresented: $isPresented, content: {
             ZStack {
-                PokemonInventoryGridItem(userVM: userVM, onPokemonSelected: { pokemon in
-                    selectedPokemon = pokemon
-                    showConfirmationAlert = true
-                })
+                VStack {
+                    Text("My Inventory")
+                        .font(.custom("PressStart2P-Regular", size: 20))
+                    PokemonInventoryGridItem(userVM: userVM, onPokemonSelected: { pokemon in
+                        selectedPokemon = pokemon
+                        showConfirmationAlert = true
+                    })
+                }
                 if showConfirmationAlert {
                     if let selectedPokemon = selectedPokemon, let newPokemon = pokemonVM.pokemon {
                         Color.black.opacity(0.5)
                             .edgesIgnoringSafeArea(.all)
                         VStack(spacing: 20) {
-                            Text("Switch \(selectedPokemon.name) for \(newPokemon.name)?")
+                            Text("Switch \(selectedPokemon.name.firstUppercased) for \(newPokemon.name.firstUppercased)?")
                                 .foregroundColor(.white)
                                 .font(.custom("PressStart2P-Regular", size: 18))
                             
                             HStack {
-                                Button("Cancelar") {
+                                Button("Cancel") {
                                     showConfirmationAlert = false
                                 }
                                 .padding()
                                 .background(Capsule().strokeBorder(Color.white))
                                 .foregroundColor(.white)
+                                .font(.custom("PressStart2P-Regular", size: 12))
                                 
                                 Button("OK") {
                                     userVM.switchPokemon(selectedPokemon: selectedPokemon, newPokemon: newPokemon)
@@ -95,6 +100,7 @@ struct PokemonCard: View {
                                 .padding()
                                 .background(Capsule().strokeBorder(Color.white))
                                 .foregroundColor(.white)
+                                .font(.custom("PressStart2P-Regular", size: 12))
                             }
                         }
                         .frame(maxWidth: 300)

@@ -28,7 +28,7 @@ struct PokemonInventoryGridItem: View {
                     } placeholder: {
                         ProgressView("Locading...")
                     }
-                    Text(pokemon.name)
+                    Text(pokemon.name.firstUppercased)
                         .foregroundColor(Color.white)
                         .font(.custom("PressStart2P-Regular", size: 12))
                         .fontWeight(.heavy)

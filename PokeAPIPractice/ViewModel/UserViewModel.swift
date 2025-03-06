@@ -26,14 +26,7 @@ class UserViewModel {
             return []
         }
     }
-   /*
-    func popPokemonFromList() {
-        user!.myPokemons.popLast()
-        saveUser()
-    }
-    */
      
-    
     func switchPokemon(selectedPokemon: Pokemon, newPokemon: Pokemon) {
         user?.myPokemons.removeAll { $0 == selectedPokemon }
         user?.myPokemons.append(newPokemon)
