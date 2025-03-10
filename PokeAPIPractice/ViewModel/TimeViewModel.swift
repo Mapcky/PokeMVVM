@@ -7,22 +7,28 @@
 
 import Foundation
 import UserNotifications
+import Observation
 
+@MainActor
+@Observable
 class TimeViewModel: ObservableObject {
-    
+    // MARK: - PROPERTIES
     private let webService = WebService()
-    @Published var timeApi: TimeAPIResponse?
-    @Published var randomDailyNumber: Int = 0
-
+    var timeApi: TimeAPIResponse?
+    var randomDailyNumber: Int = 0
+    
     private let lastOpenKey = "lastAppOpenDate"
     private let randomNumberKey = "randomNumber"
     
+    // MARK: - FUNCTIONS
     init(timeApi: TimeAPIResponse? = nil) {
         self.timeApi = timeApi
         self.randomDailyNumber = UserDefaults.standard.integer(forKey: randomNumberKey)
         
+        //First time only
         if self.randomDailyNumber == 0 {
             self.generateRandomNumber()
+            saveCurrentTimeAsLastOpen()
         }
         requestNotificationPermission()
         scheduleMidnightNotification()
@@ -33,28 +39,27 @@ class TimeViewModel: ObservableObject {
         let now = Date()
         UserDefaults.standard.set(now, forKey: lastOpenKey)
     }
-
+    
     func checkLastOpenTime() {
         guard let lastOpen = UserDefaults.standard.object(forKey: lastOpenKey) as? Date else { return }
         webService.getTokyoHour { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    if let lastOpenTokyo = self.convertToTokyoTime(date: lastOpen),
-                       let currentTokyo = self.convertToTokyoTimeFromString(data.dateTime) {
-                            
-                            if lastOpenTokyo.day != currentTokyo.day {
-                                self.generateRandomNumber()
-                            }//: if =/= day
-                        self.saveCurrentTimeAsLastOpen()
-                    }
-                case .failure(let error):
-                    print("❌ Error al obtener la hora de Tokio: \(error.localizedDescription)")
+            switch result {
+            case .success(let data):
+                if let lastOpenTokyo = self.convertToTokyoTime(date: lastOpen),
+                   let currentTokyo = self.convertToTokyoTimeFromString(data.dateTime) {
+                    
+                    if lastOpenTokyo.day != currentTokyo.day {
+                        self.generateRandomNumber()
+                    }//: if =/= day
+                    self.saveCurrentTimeAsLastOpen()
                 }
+            case .failure(let error):
+                print("❌ Error getting Tokyo time: \(error.localizedDescription)")
+                
             }
         }
     }
-
+    
     
     func convertToTokyoTime(date: Date) -> DateComponents? {
         let tokyoTimeZone = TimeZone(identifier: "Asia/Tokyo")!
@@ -75,8 +80,8 @@ class TimeViewModel: ObservableObject {
 
     func scheduleMidnightNotification() {
         let content = UNMutableNotificationContent()
-        content.title = "¡Nuevo Día en Tokio!"
-        content.body = "Un nuevo Pokémon te espera 🕛🌟"
+        content.title = "¡New day on Tokio!"
+        content.body = "A new Pokémon is waiting for you 🕛🌟"
         content.sound = .default
 
         var dateComponents = DateComponents()
@@ -87,20 +92,18 @@ class TimeViewModel: ObservableObject {
 
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         let request = UNNotificationRequest(identifier: "tokyoMidnight", content: content, trigger: trigger)
-
+        
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print(error.localizedDescription)
             }
         }
     }
-
+    
     func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    print(error.localizedDescription)
-                }
+            if let error = error {
+                print(error.localizedDescription)
             }
         }
     }

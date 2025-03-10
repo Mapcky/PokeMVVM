@@ -12,9 +12,8 @@ struct BezelBottom: View {
     @Binding var selectedTab: SelectedTab
     @Binding var path: [String]
     
-    
+    // MARK: - BODY
     var body: some View {
-        
         Rectangle()
             .fill()
             .clipShape(TopSemiCircleShape(cutoutRatio: 8))
@@ -28,7 +27,6 @@ struct BezelBottom: View {
             .clipShape(TopSemiCircleShape(cutoutRatio: 6))
             .ignoresSafeArea()
             .frame(height: 80)
-        
             .overlay(content: {
                 Circle()
                     .stroke(Color.black, lineWidth: 5)

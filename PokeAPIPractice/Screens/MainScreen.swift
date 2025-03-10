@@ -1,5 +1,5 @@
 //
-//  Tabs.swift
+//  MainScreen.swift
 //  PokeAPIPractice
 //
 //  Created by Mateo Andres Perano on 04/02/2025.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct Tabs: View {
+struct MainScreen: View {
     // MARK: - PROPERTIES
     @State private var selectedTab: SelectedTab = .Pokedex
     @State private var path: [String] = []
     
-    @ObservedObject private var pokemonListVM: PokemonListViewModel = PokemonListViewModel()
-    @ObservedObject private var timeVM: TimeViewModel = TimeViewModel()
+    private var pokemonListVM: PokemonListViewModel = PokemonListViewModel()
+    private var timeVM: TimeViewModel = TimeViewModel()
     private var userVM: UserViewModel = UserViewModel()
     
     
@@ -57,5 +57,5 @@ enum SelectedTab {
 }
 
 #Preview {
-    Tabs()
+    MainScreen()
 }

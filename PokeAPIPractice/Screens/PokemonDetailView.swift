@@ -10,10 +10,10 @@ import SwiftUI
 struct PokemonDetailView: View {
     // MARK: - PROPERTIES
     
-    @ObservedObject var pokemonVM: PokemonViewModel
+    var pokemonVM: PokemonViewModel
     @Environment(\.dismiss) private var dismiss
     // MARK: - FUNCTIONS
-
+    
     
     // MARK: - BODY
     var body: some View {
@@ -70,7 +70,6 @@ struct PokemonDetailView: View {
                 Divider()
                 
                 // MARK: - ABILITIES
-                
                 Text("Abilities")
                     .font(.custom("PressStart2P-Regular", size: 16))
                 HStack(spacing: 30) {
@@ -80,16 +79,12 @@ struct PokemonDetailView: View {
                             if abilities.is_hidden {
                                 Text("Hidden ability")
                                     .font(.custom("PressStart2P-Regular", size: 10))
-
                             }
                         }
-                        
                     }
-                    
                 }//: LOOP
                 .font(.custom("PressStart2P-Regular", size: 12))
                 Divider()
-                
                 // MARK: - STATS
                 if let pokemon = pokemonVM.pokemon {
                     StatBar(title: pokemon.stats[0].stat.name, statValue: pokemon.stats[0].baseStat)

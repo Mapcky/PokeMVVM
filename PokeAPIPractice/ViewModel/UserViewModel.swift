@@ -11,13 +11,8 @@ import Observation
 @MainActor
 @Observable
 class UserViewModel {
+    // MARK: - PROPERTIES
     private(set) var user: User?
-    
-    
-    init(user: User? = nil) {
-        self.user = User(name: "Ash", myPokemons: [])
-        loadUser()
-    }
     
     var myPokemonsList: [Pokemon] {
         if let user = user {
@@ -26,16 +21,24 @@ class UserViewModel {
             return []
         }
     }
-     
-    func switchPokemon(selectedPokemon: Pokemon, newPokemon: Pokemon) {
-        user?.myPokemons.removeAll { $0 == selectedPokemon }
-        user?.myPokemons.append(newPokemon)
-        saveUser()
-    }
     
     var isInventoryFull: Bool {
         return myPokemonsList.count == 6
     }
+
+    // MARK: - FUNCTIONS
+    init(user: User? = nil) {
+        self.user = User(name: "Ash", myPokemons: [])
+        loadUser()
+    }
+     
+    func swapPokemon(selectedPokemon: Pokemon, newPokemon: Pokemon) {
+        if let index = user?.myPokemons.firstIndex(of: selectedPokemon) {
+            user?.myPokemons[index] = newPokemon
+        }
+        saveUser()
+    }
+
     
     func addPokemon(_ pokemon: Pokemon) {
         user?.myPokemons.append(pokemon)

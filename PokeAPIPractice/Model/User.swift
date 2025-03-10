@@ -8,7 +8,6 @@
 import Foundation
 
 struct User: Codable{
-    // MARK: - PROPERTIES
     var name: String
     var myPokemons: [Pokemon]
     

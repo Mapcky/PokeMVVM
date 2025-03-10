@@ -28,11 +28,8 @@ class WebService {
             }
             
             let pokeResponse = try? JSONDecoder().decode(Pokemon.self, from: data)
-            
-            DispatchQueue.main.async {
-                if let pokeResponse = pokeResponse {
-                    completion(.success(pokeResponse))
-                }
+            if let pokeResponse = pokeResponse {
+                completion(.success(pokeResponse))
             }
             
         }.resume()
@@ -44,21 +41,14 @@ class WebService {
         }
         
         URLSession.shared.dataTask(with: pokeApiUrl) { (data, _, error) in
-            
-            
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
             }
             
             let pokeResponse = try? JSONDecoder().decode(PokemonList.self, from: data)
-            
-            
-            DispatchQueue.main.async {
-                if let pokeResponse = pokeResponse {
-                    completion(.success(pokeResponse))
-                }
-            }//DispatchQ
-            
+            if let pokeResponse = pokeResponse {
+                completion(.success(pokeResponse))
+            }
         }.resume()  //: URLSession
         
     }
@@ -67,9 +57,7 @@ class WebService {
         guard let pokeApiUrl = (URL(string: url)) else {
             return completion(.failure(.badURL))
         }
-        
         URLSession.shared.dataTask(with: pokeApiUrl) { (data, _, error) in
-            
             
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
@@ -77,13 +65,9 @@ class WebService {
             
             let pokeResponse = try? JSONDecoder().decode(Pokemon.self, from: data)
             
-            
-            DispatchQueue.main.async {
-                if let pokeResponse = pokeResponse {
-                    completion(.success(pokeResponse))
-                }
-            }//DispatchQ
-            
+            if let pokeResponse = pokeResponse {
+                completion(.success(pokeResponse))
+            }
         }.resume()  //: URLSession
         
     }
@@ -92,26 +76,15 @@ class WebService {
         guard let timeApiUrl = URL.urlGetTokyoTime() else {
             return(completion(.failure(.badURL)))
         }
-        
         URLSession.shared.dataTask(with: timeApiUrl) { (data, _, error) in
-            
             guard let data = data, error == nil else {
                 return completion(.failure(.noData))
             }
-            
             let timeResponse = try? JSONDecoder().decode(TimeAPIResponse.self, from: data)
             
-            DispatchQueue.main.async {
-                if let timeResponse = timeResponse {
-                    completion(.success(timeResponse))
-                }
-                
-            }//:DQ
-            
-            
+            if let timeResponse = timeResponse {
+                completion(.success(timeResponse))
+            }
         }.resume()
-        
     }
-    
-    
 }

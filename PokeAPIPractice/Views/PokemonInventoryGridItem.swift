@@ -18,32 +18,37 @@ struct PokemonInventoryGridItem: View {
     }
     // MARK: - BODY
     var body: some View {
-        LazyVGrid(columns: gridLayout, alignment: .center, spacing: columnSpacing, pinnedViews: [], content: {
-            ForEach(userVM.myPokemonsList, id:\.id) { pokemon in
-                VStack(alignment: .center, spacing: 15) {
-                    AsyncImage(url: URL(string: pokemon.sprites!.front_default)) { img in
-                        img.resizable()
-                            .scaledToFit()
-                            .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
-                    } placeholder: {
-                        ProgressView("Locading...")
+        VStack {
+            Text("My Invetory \(userVM.myPokemonsList.count)/6")
+                .font(.custom("PressStart2P-Regular", size: 20))
+                .padding()
+            LazyVGrid(columns: gridLayout, alignment: .center, spacing: columnSpacing, pinnedViews: [], content: {
+                ForEach(userVM.myPokemonsList, id:\.id) { pokemon in
+                    VStack(alignment: .center, spacing: 15) {
+                        AsyncImage(url: URL(string: pokemon.sprites!.front_default)) { img in
+                            img.resizable()
+                                .scaledToFit()
+                                .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 4, x: 6, y: 8)
+                        } placeholder: {
+                            ProgressView("Locading...")
+                        }
+                        Text(pokemon.name.firstUppercased)
+                            .foregroundColor(Color.white)
+                            .font(.custom("PressStart2P-Regular", size: 12))
+                            .fontWeight(.heavy)
+                            .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 3, x: 2, y: 2)
+                            .padding(.vertical, 10)
                     }
-                    Text(pokemon.name.firstUppercased)
-                        .foregroundColor(Color.white)
-                        .font(.custom("PressStart2P-Regular", size: 12))
-                        .fontWeight(.heavy)
-                        .shadow(color: Color(red: 0, green: 0, blue: 0, opacity: 0.5), radius: 3, x: 2, y: 2)
-                        .padding(.vertical, 10)
-                }
-                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 200, alignment: .center)
-                .background(TypeGradient.from(pokemon.types[0].type.name).gradient)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .padding(.horizontal, 20)
-                .onTapGesture {
-                    onPokemonSelected(pokemon)
-                }
-            }//:Loop
-        })//: VGrid
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 200, alignment: .center)
+                    .background(TypeGradient.from(pokemon.types[0].type.name).gradient)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding(.horizontal, 20)
+                    .onTapGesture {
+                        onPokemonSelected(pokemon)
+                    }
+                }//:Loop
+            })//: VGrid
+        }
         .background(.clear)
         .padding()
     }

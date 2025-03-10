@@ -6,40 +6,40 @@
 //
 
 import Foundation
+import Observation
 
+@MainActor
+@Observable
 class PokemonListViewModel: ObservableObject {
 
     // MARK: - PROPERTIES
-    @Published var pokemonL: PokemonList?
-    @Published var List: [Results] = []
-    @Published var currentPage: Int = 0
+    var pokemonL: PokemonList?
+    var List: [Results] = []
+    var currentPage: Int = 0
     var isSearching: Bool = false
     let webService = WebService()
     
     private let pageSize: Int = 50
     private var isLoading: Bool = false
     
+    var count: Int {
+        pokemonL?.count ?? 0
+    }
     
     // MARK: - FUNCTIONS
     init(pokemonL: PokemonList? = nil) {
         self.pokemonL = pokemonL
     }
         
-    var count: Int {
-        pokemonL?.count ?? 0
-    }
-
     func getFullList() {
         webService.getPokemonList(limit: 100000, offset: 0) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let data):
-                    self.pokemonL = data
-                    self.loadNextPage()
-                    self.currentPage += 1
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
+            switch result {
+            case .success(let data):
+                self.pokemonL = data
+                self.loadNextPage()
+                self.currentPage += 1
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
     }
@@ -50,14 +50,10 @@ class PokemonListViewModel: ObservableObject {
             let startIndex = currentPage * pageSize
             let endIndex = min(startIndex + pageSize, pokemonL?.results.count ?? 0)
             let newPokemon = Array(pokemonL!.results[startIndex..<endIndex])
-            
-            DispatchQueue.main.async {
-                self.List.append(contentsOf: newPokemon)
-                self.currentPage += 1
-            }
+            self.List.append(contentsOf: newPokemon)
+            self.currentPage += 1
         }
     }
-    
     
     func getListWithPaging() {
         guard !isLoading else { return }
@@ -65,22 +61,20 @@ class PokemonListViewModel: ObservableObject {
         let offset = currentPage * pageSize
         webService.getPokemonList(limit: pageSize, offset: offset) { result in
             
-            DispatchQueue.main.async {
-                self.isLoading = false
-                switch result {
-                case .success(let data):
-                    
-                    if self.currentPage == 0 {
-                        self.pokemonL = data
-                    } else {
-                        self.pokemonL?.results.append(contentsOf: data.results)
-                    }
-                    self.currentPage += 1
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }//: switch
-            }//: DispatchQ
+            self.isLoading = false
+            switch result {
+            case .success(let data):
+                
+                if self.currentPage == 0 {
+                    self.pokemonL = data
+                } else {
+                    self.pokemonL?.results.append(contentsOf: data.results)
+                }
+                self.currentPage += 1
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }//: switch
         }//: Webservice
     }
     
@@ -90,6 +84,5 @@ class PokemonListViewModel: ObservableObject {
         currentPage = 0
         isSearching = true
     }
-    
     
 }

@@ -6,11 +6,16 @@
 //
 
 import Foundation
+import Observation
 
+@MainActor
+@Observable
 class PokemonViewModel: ObservableObject {
-    
-    @Published var pokemon: Pokemon?
+    // MARK: - PROPERTIES
+    var pokemon: Pokemon?
     private var webService = WebService()
+    
+    // MARK: - INIT
     init(pokemon: Pokemon? = nil, url: String?) {
         self.pokemon = pokemon
         getPokemonByUrl(url: url ?? "")
@@ -76,14 +81,12 @@ class PokemonViewModel: ObservableObject {
         return abilities
     }
     
-    
+    // MARK: - FUNCTIONS
     func getPokemonByName(name: String) {
         webService.getPokemonByName(name: name) { result in
             switch result {
             case .success(let data):
-                DispatchQueue.main.async {
-                    self.pokemon = data
-                }
+                self.pokemon = data
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -95,9 +98,7 @@ class PokemonViewModel: ObservableObject {
         webService.getPokemonByUrl(url: url) { result in
             switch result {
             case .success(let data):
-                DispatchQueue.main.async {
-                    self.pokemon = data
-                }
+                self.pokemon = data
             case .failure(let error):
                 print(error.localizedDescription)
             }

@@ -15,7 +15,7 @@ struct UserInventory: View {
     var body: some View {
         ScrollView {
             PokemonInventoryGridItem(userVM: userVM, onPokemonSelected: {pokemon in })
-        }//:VSTACK
+        }//:SCROLL
         .background(LinearGradient(colors: [.white, Color("DexLight"),Color("DexDark")], startPoint: .topLeading, endPoint: .bottomTrailing))
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea()

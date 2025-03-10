@@ -11,7 +11,7 @@ import SwiftUI
 struct PokeAPIPracticeApp: App {
     var body: some Scene {
         WindowGroup {
-            Tabs()
+            MainScreen()
         }
     }
 }

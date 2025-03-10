@@ -9,11 +9,10 @@ import SwiftUI
 
 struct MyDailyPokemon: View {
     // MARK: - PROPERTIES
-    
-    @ObservedObject var timeVM : TimeViewModel
-    @ObservedObject private var pokemonVM: PokemonViewModel
-    @State private var isPresented: Bool = false
+    var timeVM : TimeViewModel
+    private var pokemonVM: PokemonViewModel
     var userVM: UserViewModel
+    @State private var isPresented: Bool = false
     
     // MARK: - FUNCTIONS
     init(timeVM: TimeViewModel, pokemonVM: PokemonViewModel? = nil, userVM: UserViewModel) {
@@ -39,10 +38,9 @@ struct MyDailyPokemon: View {
         .task(id: timeVM.randomDailyNumber, {
             let newUrl = "https://pokeapi.co/api/v2/pokemon/\(timeVM.randomDailyNumber)"
             pokemonVM.getPokemonByUrl(url: newUrl)
-        })
+        })//: TASK
     }
 }
-
 
  #Preview {
      MyDailyPokemon(timeVM: TimeViewModel(), userVM: UserViewModel(user: User(name: "name", myPokemons: [Pokemon(name: "Dragapult", id: 2, height: 1, sprites: nil, weight: 1, types: [], abilities: [], stats: [])])))
